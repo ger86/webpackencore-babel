@@ -1,0 +1,31 @@
+label:not(.form-check-label),
+legend
+  color: $gray-500
+
+.required
+  &:after 
+    content: " (requerido)"
+    font-size: $font-size-sm
+
+.white-box
+  min-height: 1px
+  padding: 2rem
+  margin-bottom: 1rem
+  background-color: $white
+
+.form-actions
+  display: flex
+  justify-content: flex-end
+  border-top: 1px solid $border-color
+  margin-top: 3rem
+  padding-top: 2rem
+
+  & > *
+    margin-left: 1rem
+
+.btn-submit
+  border-radius: 20px
+  text-transform: uppercase
+  font-weight: 700
+  padding-left: 2rem
+  padding-right: 2rem

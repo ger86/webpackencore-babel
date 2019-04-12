@@ -1,0 +1,67 @@
+.the-sidebar
+  display: flex
+  flex-direction: column
+  background-image: linear-gradient(to right, #1c1c1c 0%, #171717 100%)
+
+  &__name
+    color: $white
+    text-align: center
+    margin-bottom: 2rem
+
+  &__user
+    position: relative
+    width: 80px
+    margin-left: auto
+    margin-right: auto
+
+    i 
+      position: absolute
+      bottom: 5px
+      right: 5px
+      background: $secondary
+      color: $white
+      width: 32px
+      height: 32px
+      font-size: $font-size-lg
+      border-radius: 50%
+      line-height: 32px
+      text-align: center
+
+  &__avatar
+    display: block
+    width: 80px
+    height: 80px
+    margin: 2rem auto .5rem
+    border-radius: 50%
+
+.the-sidebar-nav
+  &__item
+    
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05)
+    border-top: 1px solid rgba(0, 0, 0, 0.2)
+
+    a 
+      display: flex
+      align-items: center
+      position: relative
+      justify-content: flex-start
+      padding: 1rem 1.5rem
+      color: $gray-500
+      transition: color .3s
+
+      &.active
+        color: $white
+        &::before
+          position: absolute
+          left: 0
+          background: $pink
+          width: 5px
+          height: 100%
+          content: ""
+
+      &:hover
+        color: $white
+        text-decoration: none
+
+      i
+        margin-right: 1rem

@@ -1,0 +1,21 @@
+security:
+            
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        # default:
+        #     pattern:    ^/
+        #     anonymous: true
+        #     logout:
+        #         path:   /u/logout
+        #         target: /
+        #     form_login:
+        #         csrf_token_generator: security.csrf.token_manager
+        #         login_path: app_login
+
+    # access_control:
+    #     - { path: ^/u/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    #     - { path: ^/u, roles: ROLE_USER }
+
+
