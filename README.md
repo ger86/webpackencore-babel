@@ -1,20 +1,18 @@
-# 1. Working method
+# Configuring Webpack Encore & Babel for passing by node_modules
 
-1. Rename .babelrc to babelrc in order to prevent webpack encore to detect it
-2. Add this to webpack.config.js
+This project show how you can configure WebpackEncore & Babel to pass by a library in `node_modules`.
+
+In this case, I am using a versión of Bootstrap 4 that uses the spread operator but whose modules are not ES6 compliant so I have to use the raw javascript files and traspile them using **Babel**:
 
 ```
-.configureBabel(function(babelConfig) {
-}, {
-     include_node_modules: ['bootstrap']
-})
+import dropdown from 'bootstrap/js/src/dropdown.js';
 ```
 
-3. run yarn run encore production and check public/build/vendors-xxxxx.js file. It does not contain spread operator
+In order to avoid the presence of the spread operator in the final built two steps are needed:
 
-# 2. Working method
+## Create babel.config.js
 
-1. Set the .babelrc file with the following content:
+Since the `.babelrc` file does not apply to files living in `node_modules` I have to use a `babel.config.js` file instead ([see this comment](https://github.com/symfony/webpack-encore/issues/670#issuecomment-628672354))
 
 ```
 {
@@ -22,7 +20,11 @@
       [
         "@babel/preset-env",
         {
-          "targets": {},
+          "targets": {
+            "chrome": "58",
+            "ie": "11"
+          },
+          "corejs": 3,
           "modules": false,
           "forceAllTransforms": true,
           "useBuiltIns": "entry"
@@ -33,27 +35,14 @@
   }
 ```
 
-2. Comment the following lines in webpack.config.js
+## Use configureBabel method of Webpack Encore
+
+Finally, it is needed to tell Babel that transpiles the Bootstrap JS files, so we use its method `.configureBabel` in file `webpack.config.js`:
 
 ```
-.configureBabel(function(babelConfig) {
-}, {
-     include_node_modules: ['bootstrap']
-})
+.configureBabel(null, {
+  includeNodeModules: ['bootstrap'],
+});
 ```
 
-3. Add this at the end:
-
-```
-const webpackConfig = Encore.getWebpackConfig();
-const babelLoader = webpackConfig.module.rules.find(
-  rule =>
-    rule.use &&
-    rule.use[0] &&
-    rule.use[0].loader === 'babel-loader'
-);
-
-babelLoader.exclude = /node_modules\/(?!bootstrap\/).*/;
-```
-
-4. Run again yarn run encore production and check public/build/vendors-xxx.js. It *contains* the spread operator
+Running `yarn encore production` we get a final build without the spread operator.
